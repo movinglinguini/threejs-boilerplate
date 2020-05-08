@@ -1,3 +1,10 @@
+/**
+ * @author Luis Angel Garcia (lag1996)
+ * 
+ * @description
+ * Configuration for rollup. Uses terser as a plugin.
+ */
+
 import { terser } from 'rollup-plugin-terser';
 
 const external = [
