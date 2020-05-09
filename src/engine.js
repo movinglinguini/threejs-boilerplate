@@ -7,19 +7,20 @@ import { SceneManager } from './scene-manager.js';
 /**
  * This class attaches the renderer dom element to the DOM and handles updating the screen.
 */
-
-export class Engine {
+export default class Engine {
 	/**
 	 * @param {Node} containerEl
 	 * The HTML element to append the renderer to.
 	 */
-	constructor(containerEl) {
+	constructor(containerEl = null) {
 		const containerBB = containerEl.getBoundingClientRect();
 
+		this._runUpdate = true;
+
 		this._container = containerEl;
-		this._sceneManager = SceneManager({
+		this._sceneManager = new SceneManager({
 			fov: 45,
-			aspect: (this._container.width / this._container.height),
+			aspect: (containerBB.width / containerBB.height),
 			near: 1,
 			far: 10000,
 			defaultPosition: {
@@ -34,6 +35,17 @@ export class Engine {
 		this._update = (delta) => {};
 
 		requestAnimationFrame(this._updateRoutine.bind(this));
+	}
+
+	/**
+	 *  @param {(number) => void} func
+	 *  Any function that accepts a number
+	 * 
+	 * 	@description 
+	 *  Sets func as the update function to be called before the scene is updated every frame.
+	 */
+	set Update(func) {
+		this._update = func;
 	}
 
 	/**
@@ -56,31 +68,29 @@ export class Engine {
 	 * Removes the object(s) from the scene model.
 	 */
 	removeObject(obj) {
-		this._sceneManager.addToScene(obj);
+		this._sceneManager.removeFromScene(obj);
 	}
-	
-	/**
-	 *  @param {(number) => void} func
-	 *  Any function that accepts a number
-	 * 
-	 * 	@description 
-	 *  Sets func as the update function to be called before the scene is updated every frame.
-	 */
-	setUpdateFunction(func) {
-		this.update = func;
+
+	destruct() {
+		this._runUpdate = false;
+		this._sceneManager.RENDERER.domElement.remove();
+		delete this;
 	}
-	
+
 	/**
 	 * @description
 	 * Calls the update function with the time spent between each frame as the parameter.
 	 * Updates the scene.
 	 */
 	_updateRoutine() {
+		if (this._runUpdate) { return; }
 		const newDrawCall = new Date().getTime();
 		const dt = newDrawCall - this._lastDrawCall;
 		this._lastDrawCall = newDrawCall;
 
-		this.update(dt);
+		this._update(dt);
 		this._sceneManager.draw();
+
+		requestAnimationFrame(this._updateRoutine.bind(this));
 	}
 }

@@ -6,25 +6,23 @@
  */
 
 import { terser } from 'rollup-plugin-terser';
-
-const external = [
-    'three/build/three.min.js',
-    'three/examples/js/controls/OrbitControls.js'
-];
+import resolve from '@rollup/plugin-node-resolve';
 
 const input = 'src/engine.js';
+const resolver = resolve({ browser: true })
 
 export default [{
     output: {
-        file: 'build/three-boilerplate.js',
+        file: 'build/threejs-boilerplate.js',
+        format: 'es'
     },
-    external,
     input,
+    plugins: [resolver]
 }, {
     output: {
-        file: 'build/three-boilerplate.min.js',
+        file: 'build/threejs-boilerplate.min.js',
+        format: 'es',
     },
-    plugins: [terser()],
-    external,
+    plugins: [terser(), resolver],
     input,
 }];
