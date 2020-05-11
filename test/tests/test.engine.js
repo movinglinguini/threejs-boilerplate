@@ -1,5 +1,5 @@
-import Engine from '../build/threejs-boilerplate.min.js';
-import * as THREE from '../node_modules/three/build/three.module.js';
+import Engine from '../../build/threejs-boilerplate.min.js';
+import * as THREE from '/node_modules/three/build/three.module.js';
 
 describe('Engine', function () {
   const container = document.createElement('div');
@@ -41,5 +41,3 @@ describe('Engine', function () {
     container.innerHTML = '';
   });
 });
-
-mocha.run();
