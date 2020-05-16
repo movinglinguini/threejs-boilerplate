@@ -8,13 +8,17 @@
 import { terser } from 'rollup-plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 
-const input = 'src/engine.js';
+const input = 'src/app/engine.js';
 const resolver = resolve({ browser: true })
 
 export default [{
   output: {
-      file: 'build/three-boilerplate.min.js',
+      dir: 'build/prod',
       format: 'es',
+      chunkFileNames: '[name].min.js'
+  },
+  manualChunks: {
+    three: ['three'],
   },
   plugins: [terser(), resolver],
   input,

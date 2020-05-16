@@ -1,16 +1,15 @@
 {
   "name": "@movinglinguini/three-boilerplate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "\"Boilerplate for THREEJS projects. Comes with a method for attaching the renderer to the DOM and an update loop\"",
-  "browser": "./src/engine.js",
+  "main": "./build/prod/engine.js",
+  "browser": "./build/prod/engine.js",
   "scripts": {
     "build-dev": "rollup -c configs/rollup.dev-config.js",
     "serve-dev": "rollup -w -c configs/rollup.dev-config.js | browser-sync start --server ./build/dev --files \"src/**/*.js\"",
     "build-test": "rollup -c configs/rollup.test-config.js",
-    "test": "rollup -c configs/rollup.test-config.js | browser-sync start --server ./build/test --files \"src/**/*.js\""
-  },
-  "bin": {
-    "three-boilerplate": "./.bin/cli.js"
+    "test": "rollup -c configs/rollup.test-config.js | browser-sync start --server ./build/test --files \"src/**/*.js\"",
+    "build-prod": "rollup -c configs/rollup.prod-config.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +22,7 @@
   },
   "homepage": "https://github.com/LAG1996/threejs-boilerplate#readme",
   "dependencies": {
+    "open": "^7.0.3",
     "three": "^0.116.1"
   },
   "devDependencies": {
@@ -40,7 +40,6 @@
     "rollup-plugin-terser": "^5.3.0",
     "should": "^13.2.3"
   },
-  "main": "rollup.config.js",
   "directories": {
     "test": "test"
   }

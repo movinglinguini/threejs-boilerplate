@@ -23,5 +23,5 @@ export default [{
       }
     },
     input,
-    plugins: [pluginHTML, pluginResolver]
+    plugins: [pluginResolver]
 }];

@@ -44,7 +44,14 @@ export class SceneManager {
 		this._scene.remove(obj);
 	}
 
-	draw() {
+	draw(rendererDimensions = { width: 250, height: 250 }) {
+		console.log(rendererDimensions)
+		this.resizeRenderer(rendererDimensions);
 		this._renderer.render(this._scene, this._camera);
+	}
+
+	resizeRenderer(dimensions = { width: 250, height: 250 }) {
+		this._renderer.setSize(dimensions.width, dimensions.height);
+		this._camera.aspect = this._renderer.width / this._renderer.height;
 	}
 }

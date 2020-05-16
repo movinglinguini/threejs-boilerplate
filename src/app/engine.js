@@ -13,11 +13,19 @@ export default class Engine {
 	 * The HTML element to append the renderer to.
 	 */
 	constructor(containerEl = null) {
-		const containerBB = containerEl.getBoundingClientRect();
-
-		this._runUpdate = true;
+		if (!containerEl) {
+			containerEl = document.createElement('div');
+			document.body.append(containerEl);
+		}
+		
+		this._containerClassName = `engine-container.${new Date().getTime()}`;
+		containerEl.setAttribute('class', this._containerClassName);
+		containerEl.style.height = '100vh';
+		containerEl.style.width = '100vw';
 
 		this._container = containerEl;
+
+		const containerBB = containerEl.getBoundingClientRect();
 		this._sceneManager = new SceneManager({
 			fov: 45,
 			aspect: (containerBB.width / containerBB.height),
@@ -31,9 +39,8 @@ export default class Engine {
 		this._container.appendChild(this._sceneManager.RENDERER.domElement);
 
 		this._lastDrawCall = new Date().getTime();
-
 		this._update = (delta) => {};
-
+		this._runUpdate = true;
 		requestAnimationFrame(this._updateRoutine.bind(this));
 	}
 
@@ -83,13 +90,13 @@ export default class Engine {
 	 * Updates the scene.
 	 */
 	_updateRoutine() {
-		if (this._runUpdate) { return; }
+		if (!this._runUpdate) { return; }
 		const newDrawCall = new Date().getTime();
 		const dt = newDrawCall - this._lastDrawCall;
 		this._lastDrawCall = newDrawCall;
 
 		this._update(dt);
-		this._sceneManager.draw();
+		this._sceneManager.draw(this._container.getBoundingClientRect());
 
 		requestAnimationFrame(this._updateRoutine.bind(this));
 	}
