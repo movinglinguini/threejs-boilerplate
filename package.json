@@ -1,6 +1,6 @@
 {
   "name": "@movinglinguini/three-boilerplate",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "\"Boilerplate for THREEJS projects. Comes with a method for attaching the renderer to the DOM and an update loop\"",
   "main": "./build/prod/engine.js",
   "browser": "./build/prod/engine.js",
