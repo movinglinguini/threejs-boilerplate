@@ -1,5 +1,4 @@
 import * as THREE from 'three/build/three.module';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export class SceneManager {
 	get CAMERA() {
@@ -19,11 +18,11 @@ export class SceneManager {
 			cameraProperties.near,
 			cameraProperties.far,
 		);
+
+		this._camera.position.set(0, 10, 10);
 		
 		this._renderer = new THREE.WebGLRenderer();
 		this._renderer.setPixelRatio(window.devicePixelRatio);
-
-		this._orbitControls = new OrbitControls(this._camera, this._renderer.domElement);
 	}
 
 	addToScene(obj) {
@@ -45,13 +44,14 @@ export class SceneManager {
 	}
 
 	draw(rendererDimensions = { width: 250, height: 250 }) {
-		console.log(rendererDimensions)
 		this.resizeRenderer(rendererDimensions);
 		this._renderer.render(this._scene, this._camera);
 	}
 
 	resizeRenderer(dimensions = { width: 250, height: 250 }) {
+		const rendererDims = this._renderer.domElement.getBoundingClientRect();
+		this._camera.aspect = rendererDims.width / rendererDims.height;
+		this._camera.updateProjectionMatrix();
 		this._renderer.setSize(dimensions.width, dimensions.height);
-		this._camera.aspect = this._renderer.width / this._renderer.height;
 	}
 }

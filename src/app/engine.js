@@ -2,6 +2,8 @@
 * @author Luis Angel Garcia
 */
 
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+
 import { SceneManager } from './scene-manager.js';
 
 /**
@@ -37,6 +39,8 @@ export default class Engine {
 		});
 
 		this._container.appendChild(this._sceneManager.RENDERER.domElement);
+		this._orbitControls = new OrbitControls(this._sceneManager.CAMERA, this._sceneManager.RENDERER.domElement);
+		this._orbitControls.enableDamping = true;
 
 		this._lastDrawCall = new Date().getTime();
 		this._update = (delta) => {};
