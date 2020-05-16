@@ -31,7 +31,6 @@
     "browser-sync": "^2.26.7",
     "browserfs": "^1.4.3",
     "fs": "0.0.1-security",
-    "gulp": "^4.0.2",
     "gulp-webserver": "^0.9.1",
     "http-server": "^0.12.3",
     "meow": "^7.0.0",
