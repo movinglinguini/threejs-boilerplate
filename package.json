@@ -23,7 +23,7 @@
   "homepage": "https://github.com/LAG1996/threejs-boilerplate#readme",
   "dependencies": {
     "open": "^7.0.3",
-    "three": "^0.116.1"
+    "three": "^0.125.0"
   },
   "devDependencies": {
     "@rollup/plugin-html": "^0.2.0",
